@@ -18,8 +18,8 @@
       <el-table-column
         prop="address"
         label="操作">
-        <template>
-          <el-button>加入购物车</el-button>
+        <template v-slot="scope">
+          <el-button @click="addToCart(scope.row)">加入购物车</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'ProductList',
   // data () {
@@ -43,7 +43,8 @@ export default {
     ...mapState('products', ['products'])
   },
   methods: {
-    ...mapActions('products', ['getProducts'])
+    ...mapActions('products', ['getProducts']),
+    ...mapMutations('cart', ['addToCart'])
   },
   created () {
     this.getProducts()
