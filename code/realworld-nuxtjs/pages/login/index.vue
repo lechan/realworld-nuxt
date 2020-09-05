@@ -12,18 +12,20 @@
         </p>
 
         <ul class="error-messages">
-          <li>That email is already taken</li>
+          <template v-for="(messages, field) in errors">
+            <li v-for="(message, index) in messages" :key="index">{{ field }} {{ message }}</li>
+          </template>
         </ul>
 
-        <form>
+        <form @submit.prevent="onSubmit">
           <fieldset v-if="!isLogin" class="form-group">
-            <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+            <input v-model="user.username" class="form-control form-control-lg" type="text" placeholder="Your Name" required>
           </fieldset>
           <fieldset class="form-group">
-            <input class="form-control form-control-lg" type="text" placeholder="Email">
+            <input v-model="user.email" class="form-control form-control-lg" type="email" placeholder="Email" required>
           </fieldset>
           <fieldset class="form-group">
-            <input class="form-control form-control-lg" type="password" placeholder="Password">
+            <input v-model="user.password" class="form-control form-control-lg" type="password" placeholder="Password" required minlength="8">
           </fieldset>
           <button class="btn btn-lg btn-primary pull-xs-right">
             {{ isLogin ? 'Sign in' : 'Sign up' }}
@@ -37,11 +39,46 @@
 </template>
 
 <script>
+import { login, register } from '@/api/user'
+
 export default {
   name: 'LoginIndex',
+  data () {
+    return {
+      user: {
+        username: '',
+        email: '',
+        password: ''
+      },
+      errors: {}
+    }
+  },
   computed: {
     isLogin () {
       return this.$route.name === 'login'
+    }
+  },
+  methods: {
+    async onSubmit () {
+      try {
+        // 提交表单请求登录
+        const { data } = this.isLogin
+        ? await login({
+            user: this.user
+          })
+        : await register({
+            user: this.user
+          })
+
+        console.log(data)
+        // 保存用户的登录状态
+
+        // 跳转到首页
+        this.$router.push('/')
+      } catch (err) {
+        // console.dir(err)
+        this.errors = err.response.data.errors
+      }
     }
   }
 }

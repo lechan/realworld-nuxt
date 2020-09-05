@@ -47,6 +47,7 @@ module.exports = {
           ]
         }
       ])
-    }
+    },
+    linkActiveClass: 'active'
   }
 }
