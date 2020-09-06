@@ -37,7 +37,8 @@
 
 <script>
 export default {
-  name: 'SettingIndex'
+  name: 'SettingIndex',
+  middleware: 'authenticated'
 }
 </script>
 

@@ -32,7 +32,9 @@
 
 <script>
 export default {
-  name: 'EditorIndex'
+  name: 'EditorIndex',
+  // 路由匹配组件渲染之前会先执行中间件
+  middleware: 'authenticated'
 }
 </script>
 
