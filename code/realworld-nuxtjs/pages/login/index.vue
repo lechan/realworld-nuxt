@@ -58,12 +58,12 @@ export default {
     }
   },
   computed: {
-    ...mapMutations('user', ['setUser']),
     isLogin () {
       return this.$route.name === 'login'
     }
   },
   methods: {
+    ...mapMutations('user', ['setUser']),
     async onSubmit () {
       try {
         // 提交表单请求登录
@@ -75,9 +75,7 @@ export default {
             user: this.user
           })
 
-        console.log(data)
         // 保存用户的登录状态
-        console.log(this.setUser)
         this.setUser(data.user)
 
         // 持久化登录数据
