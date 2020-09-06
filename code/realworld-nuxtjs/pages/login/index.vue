@@ -40,6 +40,7 @@
 
 <script>
 import { login, register } from '@/api/user'
+import { mapMutations } from 'vuex'
 
 // 仅在客户端加载 js-cookie
 const Cookie = process.client ? require('js-cookie') : undefined
@@ -57,6 +58,7 @@ export default {
     }
   },
   computed: {
+    ...mapMutations('user', ['setUser']),
     isLogin () {
       return this.$route.name === 'login'
     }
@@ -73,9 +75,10 @@ export default {
             user: this.user
           })
 
-        // console.log(data)
+        console.log(data)
         // 保存用户的登录状态
-        this.$store.commit('setUser', data.user)
+        console.log(this.setUser)
+        this.setUser(data.user)
 
         // 持久化登录数据
         Cookie.set('user', data.user)
