@@ -41,6 +41,9 @@
 <script>
 import { login, register } from '@/api/user'
 
+// 仅在客户端加载 js-cookie
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
   name: 'LoginIndex',
   data () {
@@ -73,6 +76,9 @@ export default {
         // console.log(data)
         // 保存用户的登录状态
         this.$store.commit('setUser', data.user)
+
+        // 持久化登录数据
+        Cookie.set('user', data.user)
 
         // 跳转到首页
         this.$router.push('/')
