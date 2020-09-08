@@ -71,7 +71,7 @@
               </nuxt-link>
               <div class="info">
                 <nuxt-link :to="`/@${article.author.username}`" class="author">{{ article.author.username }}</nuxt-link>
-                <span class="date">{{ article.createdAt }}</span>
+                <span class="date">{{ article.createdAt | date('MMM DD, YYYY') }}</span>
               </div>
               <button
                 class="btn btn-outline-primary btn-sm pull-xs-right"
