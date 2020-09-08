@@ -49,5 +49,9 @@ module.exports = {
       ])
     },
     linkActiveClass: 'active'
-  }
+  },
+  // 注册插件
+  plugins: [
+    '~/plugins/request.js'
+  ]
 }
