@@ -2,11 +2,15 @@
   <div>
     <form class="card comment-form">
       <div class="card-block">
-        <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+        <textarea class="form-control" placeholder="Write a comment..." rows="3" v-model="commentContent"></textarea>
       </div>
       <div class="card-footer">
         <img :src="user.image" class="comment-author-img" />
-        <button class="btn btn-sm btn-primary">
+        <button
+          class="btn btn-sm btn-primary"
+          :disabled="addCommentDisabled"
+          @click.prevent="handleComment()"
+        >
           Post Comment
         </button>
       </div>
@@ -56,7 +60,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getComments } from '@/api/article'
+import { getComments, addComment } from '@/api/article'
 
 export default {
   name: 'ArticleComments',
@@ -68,16 +72,31 @@ export default {
   },
   data () {
     return {
-      comments: []
+      comments: [],
+      commentContent: '',
+      addCommentDisabled: false
     }
   },
   computed: {
     ...mapState('user', ['user'])
   },
-  async mounted () {
-    const { slug } = this.article
-    const { data } = await getComments(slug)
-    this.comments = data.comments
+  methods: {
+    async handleComment () {
+      const { slug } = this.article
+      this.addCommentDisabled = true
+      await addComment(slug, this.commentContent)
+      this.addCommentDisabled = false
+      this.commentContent = ''
+      this.renderComments()
+    },
+    async renderComments () {
+      const { slug } = this.article
+      const { data } = await getComments(slug)
+      this.comments = data.comments
+    }
+  },
+  mounted () {
+    this.renderComments()
   }
 }
 </script>

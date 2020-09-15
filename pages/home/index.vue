@@ -161,7 +161,7 @@ export default {
     const limit = 10
     const tab = query.tab || 'global_feed'
     const tag = query.tag
-    const loadArticles = tab === 'global_feed' ? getArticles : getYourFeedArticles
+    const loadArticles = tab === 'your_feed' ? getYourFeedArticles : getArticles
     const [articleRes, tagRes] = await Promise.all([
       loadArticles({
         limit,
