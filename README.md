@@ -1,5 +1,6 @@
 # realworld-nuxt
 realworld-nuxt
+CI / CD
 
 # development
 npm run dev
