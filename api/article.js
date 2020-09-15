@@ -18,6 +18,17 @@ export const getYourFeedArticles = params => {
   })
 }
 
+// 创建一条文章
+export const addArticle = article => {
+  return request({
+    method: 'POST',
+    url: '/api/articles',
+    data: {
+      article
+    }
+  })
+}
+
 // 添加点赞
 export const addFavorite = slug => {
   return request({
